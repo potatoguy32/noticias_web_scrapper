@@ -45,7 +45,7 @@ def get_matches(collector, grupo, url, criterios, municipios, actividades, carte
     soup = BeautifulSoup(r.content, 'html.parser')
     titulo = soup.find('h1').text
     matching_years = [re.search('\d{4}', span.text).group() for span in soup.find_all('span') if re.search('\d{4}', span.text)]
-    if matching_years[0] < 2020:
+    if int(matching_years[0]) < 2020:
         return None
     
     complete_text = " ".join([paragraph.text.lower() for paragraph in soup.find_all('p')])
