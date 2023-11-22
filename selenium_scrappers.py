@@ -68,7 +68,7 @@ def extract_links_from_universal(browser, grupos):
         target = total_items // 20 + min(1, total_items % 20)
         for _ in range(target):
             results = browser.find_element(by=By.ID, value='resultdata')
-            anchores = [element.get_attribute("href") for element in results.find_elements(by=By.TAG_NAME, value='a')[:-1] if (len(element.text.split('\n')) > 2) and (int(re.search('\d{4}', element.text.split('\n')[1]).group()) >= 2020)]
+            anchores = [element.get_attribute("href") for element in results.find_elements(by=By.TAG_NAME, value='a')[:-1] if (len(element.text.split('\n')) > 2) and (int(re.search('\d{4}', element.text.split('\n')[1]).group()) >= 2019)]
             running_entries.extend(anchores)
             next_page_button = browser.find_element(by=By.XPATH, value='//*[@id="resultdata"]/a[1]')    
             browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
