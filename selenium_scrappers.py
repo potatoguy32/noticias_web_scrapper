@@ -203,3 +203,44 @@ def get_columnas_from_elsoldemexico(browser, word):
         return list(set(links))
     
     return list(set(links))
+
+
+def get_links_from_vanguardia(browser, word):
+    links = []
+    try:
+        browser.get('https://vanguardia.com.mx/')
+        time.sleep(1)
+        browser.find_element(By.XPATH, '//*[@id="header_sup"]/div[4]/div/div[1]').click()
+        time.sleep(2)
+        search_bar = browser.find_element(By.XPATH, '//*[@id="_3065702633_keywords"]')
+        search_bar.send_keys(word)
+        search_bar.send_keys(Keys.RETURN)
+        time.sleep(2)
+        slider = browser.find_element(By.XPATH, '//*[@id="_1612908437_myNavButtons"]')
+        total_pages = max([int(i.text) for i in slider.find_elements(By.TAG_NAME, 'li')])
+        for _ in range(1, total_pages):
+            results_block = browser.find_element(By.XPATH, '//*[@id="1612908437"]')
+            noticias = results_block.find_element(By.CLASS_NAME, 'noticias')
+            for item in noticias.find_elements(By.CLASS_NAME, 'element'):
+                text_block = item.find_element(By.CLASS_NAME, 'text_block ')
+                fecha_texto = text_block.find_element(By.CLASS_NAME, 'inf2').text
+                try:
+                    year = int(re.search('\d{4}', text_block.find_element(By.CLASS_NAME, 'inf2').text).group())
+                except:
+                    return list(set(links))
+                
+                if year >= 2019:
+                    link = text_block.find_element(By.CLASS_NAME, 'headline').find_element(By.TAG_NAME, 'a').get_attribute('href')
+                    links.append(link)
+
+            browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+            time.sleep(1)
+            browser.find_element(By.CLASS_NAME, 'next-button').click()
+            time.sleep(3)
+    except:
+        print("Unable to extract from vanguardia")
+        return list(set(links))
+        
+
+    return list(set(links))
+    
