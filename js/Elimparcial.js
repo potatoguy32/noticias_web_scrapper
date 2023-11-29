@@ -1,0 +1,1 @@
+document.querySelectorAll('div.row__container div.news__data')
