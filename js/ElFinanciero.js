@@ -42,11 +42,14 @@ import fs from "fs/promises";
                 let [anno, mes, dia] = url.match(regex)
                 const fecha = (anno +'/'+ mes +'/'+ dia)
 
+                if (anno >= 2020) {
                     return {
                         titulo,
                         url,
                         fecha
                     }
+                }
+                
             });
 
             return info
