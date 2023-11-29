@@ -1,22 +1,8 @@
 import time
-import json
 import re
-import concurrent.futures
 
-from selenium import webdriver
 from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
-
-from bs4 import BeautifulSoup
-
-import requests
-
-from retry import retry
-
-import pandas as pd
-import numpy as np
-
-import utils
+from selenium.webdriver.common.keys import Keys
 
 
 def get_links_from_infobae(browser, word):
